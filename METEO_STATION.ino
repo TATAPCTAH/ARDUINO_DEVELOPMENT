@@ -324,7 +324,7 @@ void loop() {
   smooth_green();
   smooth_red();
   smooth_blue();
-  searching_from_cd;
+  searching_from_cd();
   blinking();
   full_ring();
   sending();
