@@ -214,7 +214,7 @@ void searching_from_cd() {
 //      delay(500);
   }
 }
-void full_ring() {
+void full_ring(){
   for (int j = 0; j < 3; j++) {
     for (int i = 0; i < 16; ++i)
     {
@@ -293,4 +293,45 @@ pixels.begin();
 void loop() {
   // put your main code here, to run repeatedly:
   rainbowCycle(10);
+  rainbowCycle(10);
+  strange_ring();
+  strange_ring();
+  strange_ring();
+  strange_ring();
+  full_ring();
+  full_ring();
+  full_ring();
+  full_ring();
+  searching_from_cd();
+  searching_from_cd();
+  searching_from_cd();
+  searching_from_cd();
+  searching_from_cd();
+  searching_from_cd();
+  sending();
+  sending();
+  sending();
+  sending();
+  sending();
+  smooth_red();
+  smooth_red();
+  smooth_red();
+  smooth_green();
+  smooth_green();
+  smooth_green();
+  smooth_blue();
+  smooth_blue();
+  smooth_blue();
+  blinking();
+  blinking();
+  blinking();
+  blinking();
+  ring();
+  ring();
+  ring();
+  ring();
+  cheres();
+  cheres();
+  cheres();
+  cheres();
 }

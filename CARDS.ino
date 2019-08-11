@@ -7,6 +7,8 @@ char matrix[4][20];
 char massiv[40];
 byte x_c = 0;
 byte y_c = 0;
+byte chet = 0;
+void(* resetFunc) (void) = 0;
 void in(){
   while(digitalRead(CLK) != 0){
     if(analogRead(X) >= 768 && x_c < 19){
@@ -39,6 +41,7 @@ void in(){
       }
       delay(200);
     }
+    while(digitalRead(CLK) == 0){}
   }
 void setup() {
   // put your setup code here, to run once:
@@ -96,28 +99,58 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   while(true){
-    in();
-    byte lastx = x_c;
-    byte lasty = y_c;
+    in();//FIRST
+    byte firstx = x_c;
+    byte firsty = y_c;
     while(digitalRead(CLK) == 0){}
-    lcd.setCursor(lastx,lasty);
+    lcd.setCursor(firstx,firsty);
     lcd.noBlink();
-    lcd.setCursor(lastx,lasty);
-    lcd.print(matrix[lasty][lastx]);
-    in();
+    lcd.setCursor(firstx,firsty);
+    lcd.print(matrix[firsty][firstx]);//END FIRST
+    
+    in();//SECOND
+    byte secondx = x_c;
+    byte secondy = y_c;
     while(digitalRead(CLK) == 0){}
-    if(lastx == x_c && lasty == y_c){}
+    lcd.setCursor(secondx,secondy);
+    lcd.noBlink();
+    lcd.setCursor(secondx,secondy);
+    lcd.print(matrix[secondy][secondx]);//END SECOND
+    
+    if(firstx == secondx && firsty == secondy){}
     else{
-      lcd.setCursor(x_c,y_c);
-    lcd.print(matrix[y_c][x_c]);
-    if(matrix[lasty][lastx] == matrix[y_c][x_c]){}
+    if(matrix[firsty][firstx] == matrix[secondy][secondx]){chet++;}
     else{
       delay(1000);
+      lcd.setCursor(firstx,firsty);
+    lcd.print(" ");
+    lcd.setCursor(secondx,secondy);
+    lcd.print(" ");
+      }
+      if(chet == 20){
+        lcd.clear();
+        lcd.setCursor(1,1);
+        lcd.print("You open all cards");
+        lcd.setCursor(0,2);
+        lcd.print("To see the cards");
+        lcd.setCursor(0,3);
+        lcd.print("Push joystick AHEAD");
+        lcd.setCursor(0,1);
+        lcd.print("else BACK");
+        while(true){
+          if(analogRead(Y) >= 768){
+            for(byte j = 0;j < 4;j++){
+              for(byte i = 0;i < 20;i++){
+                lcd.setCursor(i,j);
+                lcd.print(matrix[j][i]);
+                }
+              }
+            }
+          if(analogRead(Y) <= 256){resetFunc();}
+          }
+        }
+      }
       lcd.setCursor(x_c,y_c);
-    lcd.print(" ");
-    lcd.setCursor(lastx,lasty);
-    lcd.print(" ");
-      }
-      }
+      lcd.blink();
 }
 }
